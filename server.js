@@ -8,7 +8,7 @@ const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 
 const app = express();
-app.set("trust proxy", 1);
+app.set("trust proxy", 1); // Required for Render/Heroku deployments
 const PORT = process.env.PORT || 3001;
 
 // ── Security middleware ───────────────────────────────────────────────────
@@ -50,6 +50,7 @@ app.use('/api/articles',  require('./routes/articles'));
 app.use('/api/users',     require('./routes/users'));
 app.use('/api/assessment',require('./routes/assessment'));
 app.use('/api/ads',       require('./routes/ads'));
+app.use('/api/tts',        require('./routes/tts'));
 
 // ── 404 handler ───────────────────────────────────────────────────────────
 app.use((req, res) => {
