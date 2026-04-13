@@ -9,7 +9,14 @@ router.post('/signup', async (req, res) => {
     if (!email || !password) return res.json({ error: 'Email and password required' });
     if (password.length < 6) return res.json({ error: 'Password must be at least 6 characters' });
 
-    const { data, error } = await supabase.auth.signUp({ email, password });
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: { full_name: name || '' },
+        emailRedirectTo: process.env.FRONTEND_URL || 'https://timely-buttercream-148233.netlify.app'
+      }
+    });
     if (error) return res.json({ error: error.message });
 
     // Create profile row if user created
@@ -57,7 +64,9 @@ router.post('/reset-password', async (req, res) => {
   try {
     const { email } = req.body;
     if (!email) return res.json({ error: 'Email required' });
-    const { error } = await supabase.auth.resetPasswordForEmail(email);
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: (process.env.FRONTEND_URL || 'https://timely-buttercream-148233.netlify.app') + '?reset=true'
+    });
     if (error) return res.json({ error: error.message });
     res.json({ success: true });
   } catch (err) {
