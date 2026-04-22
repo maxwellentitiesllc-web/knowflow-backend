@@ -53,12 +53,14 @@ app.use('/api/ai/', aiLimiter);
 // ── Routes ────────────────────────────────────────────────────────────────
 app.use('/api/health',    require('./routes/health'));
 app.use('/api/auth',      require('./routes/auth'));
+app.use('/api/auth/delete-account', require('./routes/deleteAccount'));
 app.use('/api/ai',        require('./routes/ai'));
 app.use('/api/articles',  require('./routes/articles'));
 app.use('/api/users',     require('./routes/users'));
 app.use('/api/assessment',require('./routes/assessment'));
 app.use('/api/ads',       require('./routes/ads'));
 app.use('/api/tts',        require('./routes/tts'));
+app.use('/api/pexels',    require('./routes/pexels'));
 
 // ── 404 handler ───────────────────────────────────────────────────────────
 app.use((req, res) => {
